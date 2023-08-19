@@ -1,0 +1,41 @@
+exclude:
+  - '**/vendor/**/*'
+  - '**/node_modules/**/*'
+  - '**/lib/generators/**/*'
+linters:
+  SelfClosingTag:
+    enabled: false
+  SpaceAroundErbTag:
+    enabled: true
+  SpaceInHtmlTag:
+    enabled: false # TODO: needs further consideration
+  AllowedScriptType:
+    enabled: true
+    allowed_types:
+      - 'text/javascript'
+    allow_blank: true
+    disallow_inline_scripts: false
+  NoJavascriptTagHelper:
+    enabled: true
+    correction_style: 'plain'
+  Rubocop:
+    enabled: true
+    rubocop_config:
+      inherit_from:
+        - .rubocop.yml
+      Layout/FirstArgumentIndentation:
+        Enabled: false
+      Layout/HashAlignment:
+        Enabled: false
+      Layout/InitialIndentation:
+        Enabled: false
+      Layout/LineLength:
+        Max: 289
+      Layout/TrailingEmptyLines:
+        Enabled: false
+      Lint/UselessAssignment:
+        Enabled: false
+      Rails/OutputSafety:
+        Enabled: false
+      Style/FrozenStringLiteralComment:
+        Enabled: false
