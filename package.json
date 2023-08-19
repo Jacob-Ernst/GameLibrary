@@ -27,6 +27,15 @@
     "prettier": "^3.0.2"
   },
   "lint-staged": {
+    "{app,spec,config,lib}/**/*.rb": [
+      "bundle exec rubocop --safe-auto-correct --color --force-exclusion"
+    ],
+    "Gemfile": [
+      "bundle exec rubocop --safe-auto-correct --color --except=Style/FrozenStringLiteralComment"
+    ],
+    "app/**/*.html.erb": [
+      "bundle exec erblint"
+    ],
     "*.js": [
       "eslint --fix"
     ],
