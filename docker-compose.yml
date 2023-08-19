@@ -11,7 +11,7 @@ services:
         RUBYGEMS_VERSION: '3.4.19'
     env_file:
       - .env
-    image: gamelibrary-server:1.0.0
+    image: gamelibrary-server:latest
     tmpfs:
       - /tmp
 

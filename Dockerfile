@@ -3,6 +3,7 @@ FROM ruby:$RUBY_VERSION-alpine
 
 RUN apk add --update --no-cache \
     bash \
+    gcompat \
     git \
     build-base \
     curl \

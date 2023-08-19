@@ -2,6 +2,8 @@
 
 version: '3'
 
+dotenv: ['.env']
+
 vars:
   JOBS:
     sh: echo $(nproc)/2 | bc
@@ -18,11 +20,14 @@ tasks:
 
   bundle:install:
     desc: Install Ruby dependencies
+    run: once
     cmds:
       - docker compose run --rm runner bundle install --jobs {{.JOBS}}
     sources:
       - Gemfile
       - Gemfile.lock
+    status:
+      - docker compose run --rm runner bundle check
 
   clean:
     desc: Remove PID file if it exists
@@ -42,6 +47,7 @@ tasks:
 
   db:setup:
     desc: Create and setup local DB
+    deps: [dev:setup]
     cmds:
       - docker compose run --rm runner bundle exec rake db:create db:schema:load
       - docker compose run --rm runner bundle exec rake db:seed
@@ -56,9 +62,28 @@ tasks:
 
   dev:setup:
     desc: Setup and install for local dev
+    deps: [docker:setup]
+    run: once
     cmds:
       - task: bundle:install
       - task: yarn:install
+
+  docker:run:
+    desc: Run the given command in Docker
+    deps: [docker:setup]
+    cmds:
+      - docker compose run --rm runner {{.CLI_ARGS}}
+
+  docker:setup:
+    desc: Build Docker resources
+    cmds:
+      - docker compose build app
+    status:
+      - docker inspect --type=image gamelibrary-server:latest >/dev/null 2>&1
+    sources:
+      - Dockerfile
+      - docker-compose.yml
+      - .dockerignore
 
   rspec:
     desc: Run RSpec tests
@@ -90,8 +115,11 @@ tasks:
 
   yarn:install:
     desc: Install Yarn dependencies for development
+    run: once
     cmds:
       - docker compose run --rm runner bundle exec yarn install --check-files
     sources:
       - package.json
-      - package-lock.json
+      - yarn.lock
+    generates:
+      - node_modules/**/*
