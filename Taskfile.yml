@@ -1,0 +1,97 @@
+# https://taskfile.dev
+
+version: '3'
+
+vars:
+  JOBS:
+    sh: echo $(nproc)/2 | bc
+
+tasks:
+  build:envrc:
+    desc: Generate direnv config from ".env"
+    cmds:
+      - cat .env | sed -e 's/^/export /' > .envrc
+    sources:
+      - .env
+    generates:
+      - .envrc
+
+  bundle:install:
+    desc: Install Ruby dependencies
+    cmds:
+      - docker compose run --rm runner bundle install --jobs {{.JOBS}}
+    sources:
+      - Gemfile
+      - Gemfile.lock
+
+  clean:
+    desc: Remove PID file if it exists
+    cmds:
+      - rm -f tmp/pids/server.pid
+
+  db:drop:
+    desc: Drop local DB
+    cmds:
+      - docker compose run --rm runner bundle exec rake db:drop
+
+  db:rebuild:
+    desc: Drop and then rebuild local DB
+    cmds:
+      - task: db:drop
+      - task: db:setup
+
+  db:setup:
+    desc: Create and setup local DB
+    cmds:
+      - docker compose run --rm runner bundle exec rake db:create db:schema:load
+      - docker compose run --rm runner bundle exec rake db:seed
+      - docker compose run --rm runner bundle exec rake db:populate
+
+  debug:web:
+    desc: Launch services and attach to server for debugging
+    deps: [clean]
+    cmds:
+      - docker compose up -d web
+      - docker attach $(docker-compose ps -q web)
+
+  dev:setup:
+    desc: Setup and install for local dev
+    cmds:
+      - task: bundle:install
+      - task: yarn:install
+
+  rspec:
+    desc: Run RSpec tests
+    cmds:
+      - docker compose run --rm runner bundle exec rspec
+
+  start:
+    desc: Start local development server
+    deps: [clean]
+    cmds:
+      - docker compose up web
+
+  stop:
+    desc: Stop local development server
+    cmds:
+      - docker compose stop
+      - task: clean
+
+  yard:
+    desc: Generate YARD documentation
+    deps: [yard:clean]
+    cmds:
+      - docker compose run --rm runner bundle exec yardoc
+
+  yard:clean:
+    desc: Remove YARD files
+    cmds:
+      - rm -rf .yardoc doc
+
+  yarn:install:
+    desc: Install Yarn dependencies for development
+    cmds:
+      - docker compose run --rm runner bundle exec yarn install --check-files
+    sources:
+      - package.json
+      - package-lock.json
