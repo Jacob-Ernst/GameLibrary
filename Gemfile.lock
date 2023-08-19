@@ -107,6 +107,10 @@ GEM
     ffi (1.15.5)
     globalid (1.1.0)
       activesupport (>= 5.0)
+    graphiql-rails (1.9.0)
+      railties
+      sprockets-rails
+    graphql (2.0.26)
     i18n (1.14.1)
       concurrent-ruby (~> 1.0)
     image_processing (1.12.2)
@@ -233,6 +237,8 @@ GEM
       rubocop (~> 1.41)
     rubocop-factory_bot (2.23.1)
       rubocop (~> 1.33)
+    rubocop-graphql (1.4.0)
+      rubocop (>= 0.90, < 2)
     rubocop-performance (1.19.0)
       rubocop (>= 1.7.0, < 2.0)
       rubocop-ast (>= 0.4.0)
@@ -289,6 +295,8 @@ DEPENDENCIES
   erb_lint
   factory_bot_rails (~> 6.0)
   faker
+  graphiql-rails
+  graphql
   image_processing (~> 1.2)
   jsbundling-rails
   nokogiri
@@ -299,6 +307,7 @@ DEPENDENCIES
   reek (~> 6.0)
   rspec-rails
   rubocop
+  rubocop-graphql
   rubocop-performance
   rubocop-rails
   rubocop-rspec (~> 2.2)

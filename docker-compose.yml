@@ -28,7 +28,7 @@ services:
       - RAILS_ENV=${RAILS_ENV:-development}
       - DATABASE_URL=postgres://postgres:postgres@postgres:5432
       - BOOTSNAP_CACHE_DIR=/bundle/bootsnap
-      - WEB_CONCURRENCY=1
+      - WEB_CONCURRENCY=0
       - HISTFILE=/app/log/.bash_history
       - DATABASE_CLEANER_ALLOW_REMOTE_DATABASE_URL=true
       - POSTGRES_USER=postgres
