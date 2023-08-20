@@ -36,11 +36,19 @@ tasks:
 
   db:drop:
     desc: Drop local DB
+    deps: [docker:setup]
     cmds:
       - docker compose run --rm runner bundle exec rake db:drop
 
+  db:migrate:
+    desc: Migrate local
+    deps: [docker:setup]
+    cmds:
+      - docker compose run --rm runner bundle exec rake db:migrate
+
   db:rebuild:
     desc: Drop and then rebuild local DB
+    deps: [docker:setup]
     cmds:
       - task: db:drop
       - task: db:setup
