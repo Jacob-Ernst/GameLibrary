@@ -1,21 +1,17 @@
 # frozen_string_literal: true
 
-class Game < ApplicationRecord
+class GameTag < ApplicationRecord
   # @internal Constants =====================================================
 
   # @internal Attributes ====================================================
-  enum(
-    platform: { ps5: 0, nintendo_switch: 1, pc: 2, wii_u: 3 }
-  )
 
   # @internal Extensions ====================================================
 
   # @internal Relationships =================================================
-  has_many :game_tags, dependent: :destroy
-  has_many :tags, through: :game_tags
+  belongs_to :game
+  belongs_to :tag
 
   # @internal Validations ===================================================
-  validates :title, :platform, presence: true
 
   # @internal Scopes ========================================================
 
