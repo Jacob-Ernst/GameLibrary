@@ -193,3 +193,6 @@ doc/
 
 # go-task output
 .task/
+
+app/assets/builds
+!app/assets/builds/.keep
