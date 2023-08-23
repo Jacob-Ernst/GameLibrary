@@ -5,7 +5,11 @@
     "es6": true,
     "node": true
   },
-  "extends": ["eslint:recommended", "plugin:prettier/recommended"],
+  "extends": [
+    "eslint:recommended",
+    "plugin:react/recommended",
+    "plugin:prettier/recommended"
+  ],
   "parser": "@babel/eslint-parser",
   "parserOptions": {
     "requireConfigFile": false,
@@ -18,9 +22,10 @@
     "babelOptions": {
       "babelrc": false,
       "configFile": false,
-      "presets": ["@babel/preset-env"]
+      "presets": ["@babel/preset-env", "@babel/preset-react"]
     }
   },
+  "plugins": ["react"],
   "rules": {
     "complexity": ["error", 10],
     "linebreak-style": ["error", "unix"],
@@ -56,6 +61,7 @@
       }
     ],
     "prefer-template": ["error"],
-    "prettier/prettier": 1
+    "prettier/prettier": 1,
+    "react/prop-types": ["off"]
   }
 }

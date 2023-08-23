@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# Represents the relationship between a {Game} and a {Tag}.
 class GameTag < ApplicationRecord
   # @internal Constants =====================================================
 

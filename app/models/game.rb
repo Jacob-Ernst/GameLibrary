@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# Game in a user's video game library.
 class Game < ApplicationRecord
   # @internal Constants =====================================================
 

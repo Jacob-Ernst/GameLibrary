@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# A sub-genre or common characteristic shared between certain {Game}s.
 class Tag < ApplicationRecord
   # @internal Constants =====================================================
 
