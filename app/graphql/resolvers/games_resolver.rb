@@ -11,11 +11,17 @@ module Resolvers
       description: 'Filter games by platform'
     )
 
-    def resolve(**args)
-      if args.any?
-        Game.where(**args)
+    def resolve(lookahead:, platform: nil)
+      base_query = if platform
+        Game.where(platform:)
       else
         Game.all
+      end
+
+      if lookahead.selection(:nodes).selects?(:tags)
+        base_query.includes(:tags)
+      else
+        base_query
       end
     end
   end

@@ -12,7 +12,8 @@ module Types
     field(
       :games,
       resolver: Resolvers::GamesResolver,
-      description: 'Video games in your library'
+      description: 'Video games in your library',
+      extras: [:lookahead]
     )
   end
 end
