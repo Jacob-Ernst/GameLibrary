@@ -32,7 +32,7 @@ function GamesIndex() {
   if (error) return <p>Error : {error.message}</p>;
 
   return (
-    <div className="grid grid-flow-row auto-rows-min auto-cols-fr gap-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+    <div className="grid grid-flow-row auto-rows-min auto-cols-fr gap-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 justify-items-center">
       {data.games.nodes.map((game) => (
         <Game key={game.id} game={game} />
       ))}
