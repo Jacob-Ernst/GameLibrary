@@ -1,4 +1,5 @@
 import { ApolloClient, InMemoryCache, createHttpLink } from '@apollo/client';
+import { relayStylePagination } from '@apollo/client/utilities';
 
 const baseURL = process.env.ROOT_URL;
 
@@ -16,9 +17,19 @@ const link = createHttpLink({
   fetch: customFetch,
 });
 
+const cache = new InMemoryCache({
+  typePolicies: {
+    Query: {
+      fields: {
+        games: relayStylePagination(),
+      },
+    },
+  },
+});
+
 const client = new ApolloClient({
   link,
-  cache: new InMemoryCache(),
+  cache,
 });
 
 export default client;
