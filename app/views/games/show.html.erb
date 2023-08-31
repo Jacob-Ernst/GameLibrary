@@ -1,0 +1,7 @@
+<% content_for :head do %>
+  <%= javascript_include_tag 'pages/games_show', 'data-turbo-track': 'reload', defer: true %>
+<% end %>
+
+<main class="px-6 py-8">
+  <div id="react-container" data-game-id="<%= @id %>"></div>
+</main>

@@ -7,4 +7,7 @@ Rails.application.routes.draw do
 
   # Defines the root path route ("/")
   root 'games#index'
+
+  resources :games, only: %w[show], controller: 'games'
+  resources :tags, only: %w[show], controller: 'tags'
 end

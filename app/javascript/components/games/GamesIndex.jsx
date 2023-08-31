@@ -2,7 +2,7 @@ import React from 'react';
 import { useQuery, gql } from '@apollo/client';
 
 import Game from './components/Game';
-import MoreButton from '../shared/Pagination';
+import MoreButton from '../shared/MoreButton';
 
 const GET_GAMES = gql`
   query GetGames($after: String) {
